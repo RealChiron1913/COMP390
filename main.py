@@ -1,4 +1,5 @@
-from caesar_cipher import *
+import caesar_cipher as caesar
+import permutation_cipher as permutation
 
 
 def gettext(path="hamlet.txt"):  # get text from file
@@ -6,16 +7,34 @@ def gettext(path="hamlet.txt"):  # get text from file
     return text
 
 
+def encrypt(text, method, key=0, allupper=True):  # encrypt text
+    if method == 'caesar':
+        return caesar.encrypt(text, key, allupper)
+    if method == 'permutation':
+        return permutation.encrypt(text, key, allupper)
+
+
+def decrypt(text, method, key=0):  # decrypt text
+    if method == 'caesar':
+        return caesar.decrypt(text, key)
+    if method == 'permutation':
+        return permutation.decrypt(text, key)
+
+
 if __name__ == '__main__':
-    key = 3
-    caesar_encrypted = caesar_encrypt(gettext('hamlet.txt'), key)
-    txt = open('hamlet_caesar_encrypted.txt', 'w')
-    txt.write(caesar_encrypted)
 
-    caesar_decrypted_without_key = caesar_decrypt_without_key(gettext('hamlet_caesar_encrypted.txt'))
-    txt = open('hamlet_caesar_decrypted_without_key.txt', 'w')
-    txt.write(caesar_decrypted_without_key)
+    # caesar cipher
+    # encrypted = encrypt(gettext('hamlet.txt'), 'caesar', 3)
+    # txt = open('hamlet_caesar_encrypted.txt', 'w')
+    # txt.write(encrypted)
+    # decrypted = decrypt(encrypted, 'caesar', 3)
+    # decrypted_txt = open('hamlet_caesar_decrypted.txt', 'w')
+    # decrypted_txt.write(decrypted)
 
-    caesar_decrypted = caesar_decrypt(gettext('hamlet_caesar_encrypted.txt'), key)
-    txt = open('hamlet_caesar_decrypted.txt', 'w')
-    txt.write(caesar_decrypted)
+    # permutation cipher
+    encrypted = encrypt(gettext('hamlet.txt'), 'permutation', '9999456')
+    txt = open('hamlet_permutation_encrypted.txt', 'w')
+    txt.write(encrypted)
+    decrypted = decrypt(encrypted, 'permutation', '9999456')
+    decrypted_txt = open('hamlet_permutation_decrypted.txt', 'w')
+    decrypted_txt.write(decrypted)

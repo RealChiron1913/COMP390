@@ -2,10 +2,12 @@ import enchant
 import re
 
 
-def caesar_encrypt(message, key):  # caesar cipher encrypt
+def encrypt(message, key, allupper=False):  # caesar cipher encrypt
     encrypted_message = ""
     for char in message:
         if char.isalpha():
+            if allupper:
+                char = char.upper()
             is_upper = char.isupper()
             char_code = ord(char)
             shifted_code = (char_code - ord('A' if is_upper else 'a') + key) % 26
@@ -16,7 +18,7 @@ def caesar_encrypt(message, key):  # caesar cipher encrypt
     return encrypted_message
 
 
-def caesar_decrypt(encrypted_message, key):  # caesar cipher decrypt with key
+def decrypt(encrypted_message, key):  # caesar cipher decrypt with key
     decrypted_message = ""
     for char in encrypted_message:
         if char.isalpha():
@@ -30,7 +32,7 @@ def caesar_decrypt(encrypted_message, key):  # caesar cipher decrypt with key
     return decrypted_message
 
 
-def caesar_decrypt_without_key(encrypted_message, if_check_words=False):  # caesar cipher decrypt without key
+def decrypt_without_key(encrypted_message, if_check_words=False):  # caesar cipher decrypt without key
     print('trying to find key...')
     text = encrypted_message.lower()
     counts = {}
@@ -50,25 +52,25 @@ def caesar_decrypt_without_key(encrypted_message, if_check_words=False):  # caes
     maybe_e = max(counts, key=counts.get)
     password = ord(maybe_e) - ord('e')
     print('key may be: ' + str(password))
-    caesar_decrypted_test = caesar_decrypted = caesar_decrypt(encrypted_message, password)
-    if if_check_words:
-        print('current rate is ' + '%.2f' % (check_words(caesar_decrypted_test) * 100) + '%')
-    return caesar_decrypted
+    caesar_decrypted_test = caesar_decrypted = decrypt(encrypted_message, password)
+    # if if_check_words:
+    #     print('current rate is ' + '%.2f' % (check_words(caesar_decrypted_test) * 100) + '%')
+    return caesar_decrypted, password
 
 
-def check_words(words):  # check if the words are English words
-    print('checking words...')
-    d = enchant.Dict('en_GB')
-    words = re.sub('[^0-9a-zA-Z-]', ' ', words)
-    words = words.split()
-    total = 0
-    checked = 0
-    for word in words:
-        if d.check(word):
-            total += 1
-        checked += 1
-        if int(checked / len(words) * 100) != int((checked - 1) / len(words) * 100):
-            print('\r' + str(int(checked / len(words) * 100)) + '%', end='')
-    print('\r100%', end='\n')
-    rate = total / len(words)
-    return rate
+# def check_words(words):  # check if the words are English words
+#     print('checking words...')
+#     d = enchant.Dict('en_GB')
+#     words = re.sub('[^0-9a-zA-Z-]', ' ', words)
+#     words = words.split()
+#     total = 0
+#     checked = 0
+#     for word in words:
+#         if d.check(word):
+#             total += 1
+#         checked += 1
+#         if int(checked / len(words) * 100) != int((checked - 1) / len(words) * 100):
+#             print('\r' + str(int(checked / len(words) * 100)) + '%', end='')
+#     print('\r100%', end='\n')
+#     rate = total / len(words)
+#     return rate

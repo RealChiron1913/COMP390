@@ -1,19 +1,19 @@
-from main import gettext
 
 
-def encrypt(message, key):
+def encrypt(message, key, allupper=False):
     key = key_process(key)
     columns = len(key)
     rows = (len(message) + columns - 1) // columns
     padding = rows * columns - len(message)
-    message += ' ' * padding
+    message += 'X' * padding
     matrix = [list(message[i:i + columns]) for i in range(0, len(message), columns)]
     encrypted_text = ""
     for col in key:
         col_index = int(col)
         for row in range(rows):
             encrypted_text += matrix[row][col_index]
-
+    if allupper:
+        encrypted_text = encrypted_text.upper()
     return encrypted_text
 
 
@@ -57,12 +57,12 @@ def key_process(number_strings):
     return processed
 
 
-plaintext = gettext('hamlet.txt')
-key = '9999456'
-encrypted = encrypt(plaintext, key)
-# print(encrypted)
-decrypted = decrypt(encrypted, key)
-# print(decrypted)
-print(key)
+# plaintext = gettext('hamlet.txt')
+# key = '9999456'
+# encrypted = encrypt(plaintext, key)
+# # print(encrypted)
+# decrypted = decrypt(encrypted, key)
+# # print(decrypted)
+# print(key)
 
 
