@@ -38,3 +38,6 @@ if __name__ == '__main__':
     decrypted = decrypt(encrypted, 'permutation', '9999456')
     decrypted_txt = open('hamlet_permutation_decrypted.txt', 'w')
     decrypted_txt.write(decrypted)
+
+
+    

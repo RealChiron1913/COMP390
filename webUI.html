@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title>Encryption Tool</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 2rem;
+        }
+        .grid input,
+        .grid textarea,
+        .grid progress {
+            margin-bottom: 1rem; 
+        }
+        /* .key-input {
+            display: none;
+        } */
+        .button {
+            /* display: flex; */
+            gap: 1rem;
+            padding: 5px 10px; /* 减小内边距 */
+            /* font-size: 12px; 减小字体大小 */
+            border-radius: 4px;
+            width: 100px;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            /* margin-bottom: 1rem; */
+        }
+        .button-control {
+            /* display: flex; */
+            padding: 5px 10px; /* 减小内边距 */
+            /* font-size: 12px; 减小字体大小 */
+            border-radius: 4px; /* 圆角 */
+            width: 8rem;
+            margin: auto;/* 居中 */
+        }
+        .control-area {
+            display: flex; 
+            flex-direction: column; /* 纵向排列 */
+            align-items: center; /* 居中 */
+            padding-bottom: 8rem;
+            gap: 20px;
+
+        }
+        .key-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+        }
+        .processing {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .language-bar {
+            width: 15rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="container-fluid">
+        <ul>
+            <li><strong>Encryption Tool</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#" role="button">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <div class="grid">
+            <section> 
+                <hgroup>
+                    <h2>Encryption Tool</h2>
+                    <h3>Secure your information</h3>
+                </hgroup>
+                <p>Select the type of encryption, enter your text, and choose if you want to use a key for encryption/decryption.</p>
+                <div class="language-bar">
+                    <label for="language">Language</label>
+                    <select id="language" name="language">
+                        <option value="english">English</option>
+                        <option value="chinese">Chinese</option>
+                        <!-- Add more language options here -->
+                    </select>
+                </div>
+                <div>
+                    <input type="radio" id="caesar" name="encryption" value="caesar">
+                    <label for="caesar">Caesar's</label>
+                </div>
+                <div>
+                    <input type="radio" id="permutation" name="encryption" value="permutation">
+                    <label for="permutation">Permutation</label>
+                </div>
+                <div>
+                    <input type="radio" id="substitution" name="encryption" value="substitution">
+                    <label for="substitution">Substitution</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="withoutkey" name="withoutkey">
+                    <label for="withoutkey">Decryption without Key</label>
+                </div>
+                
+                <div class="grid">
+                    <div class="text-area">
+                    	<label for="plaintext">Text (Plaintext)</label>
+                    	<textarea id="plaintext" name="plaintext" rows="10"></textarea>
+                        <div class="button-group">
+                            <button class = "button" type="button" onclick="event.preventDefault()">Upload</button>
+                            <button class = "button" type="button" onclick="event.preventDefault()">Save</button>
+                        </div>
+                    </div>
+                    <div class="control-area">
+                        <div class="key-input">
+                            <label for="key">Key</label>
+                            <input type="text" id="key" name="key">
+                        </div>
+                        <button class = "button-control" type="button" onclick="event.preventDefault()">Encrypt -></button>
+                        <button class = "button-control" type="button" onclick="event.preventDefault()"><- Decrypt</button>
+                        <div class="processing">
+                            <label for="processing">Processing</label>
+                            <progress id="processing" value="0" max="100" class="processing-bar"></progress>
+                        </div>
+                    </div>
+                    <div class="text-area">
+                        <label for="ciphertext">Text (Ciphertext)</label>
+                        <textarea id="ciphertext" name="ciphertext" rows="10" readonly></textarea>
+                        <div class="button-group">
+                            <button class = "button" type="button" onclick="event.preventDefault()">Upload</button>
+                            <button class = "button" type="button" onclick="event.preventDefault()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="container">
+        <small>
+            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
+        </small>
+    </footer>
+
+    <script>
+        document.getElementById('withoutkey').addEventListener('change', function() {
+            var keyInput = document.getElementById('key');
+            if (this.checked) {
+                keyInput.disabled = true;
+            } else {
+                keyInput.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
