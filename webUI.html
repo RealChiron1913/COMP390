@@ -16,14 +16,9 @@
         .grid progress {
             margin-bottom: 1rem; 
         }
-        /* .key-input {
-            display: none;
-        } */
         .button {
-            /* display: flex; */
             gap: 1rem;
-            padding: 5px 10px; /* 减小内边距 */
-            /* font-size: 12px; 减小字体大小 */
+            padding: 5px 10px;
             border-radius: 4px;
             width: 100px;
         }
@@ -31,15 +26,12 @@
             display: flex;
             gap: 10px;
             justify-content: space-between;
-            /* margin-bottom: 1rem; */
         }
         .button-control {
-            /* display: flex; */
-            padding: 5px 10px; /* 减小内边距 */
-            /* font-size: 12px; 减小字体大小 */
-            border-radius: 4px; /* 圆角 */
+            padding: 5px 10px;
+            border-radius: 4px;
             width: 8rem;
-            margin: auto;/* 居中 */
+            margin: auto;
             margin-bottom: 1rem;
         }
         .key-input {
@@ -54,9 +46,21 @@
             align-items: center;
             width: 100%;
         }
-        .language-bar {
+        .selectbar {
             width: 15rem;
         }
+        .checkbox {
+            margin-top: 0.8rem;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+            border: 1px solid rgb(55,73,86);
+            border-radius: 8px;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
     </style>
 </head>
 <body>
@@ -79,7 +83,7 @@
                     <h3>Secure your information</h3>
                 </hgroup>
                 <p>Select the type of encryption, enter your text, and choose if you want to use a key for encryption/decryption.</p>
-                <div class="language-bar">
+                <div class="selectbar">
                     <label for="language">Language</label>
                     <select id="language" name="language">
                         <option value="english">English</option>
@@ -87,21 +91,27 @@
                         <!-- Add more language options here -->
                     </select>
                 </div>
-                <div>
-                    <input type="radio" id="caesar" name="encryption" value="caesar">
-                    <label for="caesar">Caesar's</label>
+                <div class="selectbar">
+                    <label for="criphermethod">Cripher Method</label>
+                    <select id="criphermethod" name="criphermethod">
+                        <option value="caesar">Caesar's</option>
+                        <option value="permutation">Permutation</option>
+                        <option value="substitution">Substitution</option>
+                        <!-- Add more cripher method options here -->
+                    </select>
                 </div>
                 <div>
-                    <input type="radio" id="permutation" name="encryption" value="permutation">
-                    <label for="permutation">Permutation</label>
-                </div>
-                <div>
-                    <input type="radio" id="substitution" name="encryption" value="substitution">
-                    <label for="substitution">Substitution</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="withoutkey" name="withoutkey">
-                    <label for="withoutkey">Decryption without Key</label>
+                    <label for="options">Options</label>
+                    <div class="options">
+                        <div>
+                            <input class="checkbox" type="checkbox" id="withoutkey" name="withoutkey">
+                            <label for="withoutkey">Decryption without Key</label>
+                        </div>
+                        <div>  <!-- Add case sensitive here -->
+                            <input class="checkbox" type="checkbox" id="casesensitive" name="casesensitive">
+                            <label for="casesensitive">Case Sensitive</label>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="grid">
