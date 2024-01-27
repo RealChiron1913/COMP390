@@ -40,20 +40,13 @@
             border-radius: 4px; /* 圆角 */
             width: 8rem;
             margin: auto;/* 居中 */
-        }
-        .control-area {
-            display: flex; 
-            flex-direction: column; /* 纵向排列 */
-            align-items: center; /* 居中 */
-            padding-bottom: 8rem;
-            gap: 20px;
-
+            margin-bottom: 1rem;
         }
         .key-input {
             display: flex;
             flex-direction: column;
             align-items: center;
-            
+            margin-top: 2rem;
         }
         .processing {
             display: flex;
@@ -125,8 +118,8 @@
                             <label for="key">Key</label>
                             <input type="text" id="key" name="key">
                         </div>
-                        <button class = "button-control" type="button" onclick="event.preventDefault()">Encrypt -></button>
-                        <button class = "button-control" type="button" onclick="event.preventDefault()"><- Decrypt</button>
+                        <button class = "button-control" type="button" onclick="event.preventDefault()">Encrypt</button>
+                        <button class = "button-control" type="button" onclick="event.preventDefault()">Decrypt</button>
                         <div class="processing">
                             <label for="processing">Processing</label>
                             <progress id="processing" value="0" max="100" class="processing-bar"></progress>
@@ -134,7 +127,7 @@
                     </div>
                     <div class="text-area">
                         <label for="ciphertext">Text (Ciphertext)</label>
-                        <textarea id="ciphertext" name="ciphertext" rows="10" readonly></textarea>
+                        <textarea id="ciphertext" name="ciphertext" rows="10"></textarea>
                         <div class="button-group">
                             <button class = "button" type="button" onclick="event.preventDefault()">Upload</button>
                             <button class = "button" type="button" onclick="event.preventDefault()">Save</button>
