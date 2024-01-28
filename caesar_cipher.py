@@ -2,11 +2,11 @@ import enchant
 import re
 
 
-def encrypt(message, key, allupper=False):  # caesar cipher encrypt
+def encrypt(message, key, casesensitive=False):  # caesar cipher encrypt
     encrypted_message = ""
     for char in message:
         if char.isalpha():
-            if allupper:
+            if casesensitive is False:
                 char = char.upper()
             is_upper = char.isupper()
             char_code = ord(char)

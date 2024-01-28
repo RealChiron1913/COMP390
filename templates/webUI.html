@@ -60,6 +60,28 @@
             padding: 0.5rem;
             margin-bottom: 1rem;
         }
+        .selectionbar {
+            display: block;
+        }
+        
+        .info-icon {
+            display: inline-block;
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+            border: 2px solid rgb(55,73,86);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            cursor: help;
+            text-emphasis: none;
+        }
+        .methodbar{
+            display: flex;
+            flex-direction: row;
+        }
+
         
     </style>
 </head>
@@ -93,13 +115,21 @@
                 </div>
                 <div class="selectbar">
                     <label for="ciphermethod">Cipher Method</label>
-                    <select id="ciphermethod" name="ciphermethod">
+                    <div class="methodbar">
+                        <select id="ciphermethod" name="ciphermethod">
                         <option value="caesar">Caesar's</option>
-                        <option value="permutation">Permutation</option>
-                        <option value="substitution">Substitution</option>
+                            <option value="permutation">Permutation</option>
+                            <option value="substitution">Substitution</option>
                         <!-- Add more cripher method options here -->
-                    </select>
+                        </select>                         
+                        <div>
+                            <span class="info-icon" data-tooltip="Caesar: Shifts letters by a fixed number.">?</span>
+                        </div>
+                    </div>
+                    
                 </div>
+                
+                
                 <div>
                     <label for="options">Options</label>
                     <div class="options">
@@ -126,9 +156,9 @@
                     <div class="control-area">
                         <div class="key-input">
                             <label for="key">Key</label>
-                            <input type="text" id="key" name="key">
+                            <input type="text" id="key" name="key" placeholder="Enter a number">
                         </div>
-                        <button class = "button-control" type="button" onclick="event.preventDefault()">Encrypt</button>
+                        <button class = "button-control" type="button" onclick="button_encrypt()">Encrypt</button>
                         <button class = "button-control" type="button" onclick="event.preventDefault()">Decrypt</button>
                         <div class="processing">
                             <label for="processing">Processing</label>
@@ -155,14 +185,92 @@
     </footer>
 
     <script>
+        document.querySelectorAll('.button, .button-control').forEach(button => {
+            button.style.cursor = 'pointer'; // Change cursor to pointer when hover over buttons
+            // Add click animation
+            button.onmousedown = () => button.style.transform = 'scale(0.95)';
+            button.onmouseup = () => button.style.transform = 'scale(1)';
+        });
+
         document.getElementById('withoutkey').addEventListener('change', function() {
             var keyInput = document.getElementById('key');
             if (this.checked) {
                 keyInput.disabled = true;
+                keyInput.style.opacity = '0.5'; // Reduce opacity to indicate it's disabled
+                // Smooth transition for opacity
+                keyInput.style.transition = 'opacity 0.5s';
             } else {
                 keyInput.disabled = false;
+                keyInput.style.opacity = '1'; // Full opacity when enabled
             }
         });
+
+        document.getElementById('ciphermethod').addEventListener('change', function() {
+            var keyInput = document.getElementById('key');
+            if (this.value == 'caesar') {
+                keyInput.placeholder = 'Enter a number';
+            } else {
+                keyInput.placeholder = 'Enter a key';
+            }
+            var method = this.value;
+            var tooltip = document.querySelector('.info-icon');
+            switch (method) {
+                case 'caesar':
+                    tooltip = 'Caesar: Shifts letters by a fixed number.';
+                    break;
+                case 'permutation':
+                    tooltip = 'Permutation: Rearranges letters according to a key.';
+                    break;
+                case 'substitution':
+                    tooltip = 'Substitution: Replaces letters according to a key.';
+                    break;
+            }
+            var infoicon = document.querySelector('.info-icon');
+            infoicon.setAttribute('data-tooltip', tooltip);
+        });
+
+        document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('mouseenter', function() {
+                var tooltip = this.getAttribute('data-tooltip');
+                var tooltipDiv = document.createElement('div');
+                tooltipDiv.classList.add('tooltip');
+                this.appendChild(tooltipDiv);
+            });
+
+            icon.addEventListener('mouseleave', function() {
+                this.removeChild(this.querySelector('.tooltip'));
+            });
+        });
+
+        function button_encrypt() {
+            var plaintext = document.getElementById('plaintext').value;
+            var key = document.getElementById('key').value;
+            var language = document.getElementById('language').value;
+            var ciphermethod = document.getElementById('ciphermethod').value;
+            var casesensitive = document.getElementById('casesensitive').checked;
+            fetch('/encrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ciphertext').value = data.ciphertext;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+
+       
+        
+
+        
+
+
     </script>
 </body>
 </html>
