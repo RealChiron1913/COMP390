@@ -156,7 +156,7 @@
                     <div class="control-area">
                         <div class="key-input">
                             <label for="key">Key</label>
-                            <input type="text" id="key" name="key" placeholder="Enter a number">
+                            <input type="text" id="key" name="key" placeholder="Enter a key">
                         </div>
                         <button class = "button-control" type="button" onclick="button_encrypt()">Encrypt</button>
                         <button class = "button-control" type="button" onclick="event.preventDefault()">Decrypt</button>
@@ -207,11 +207,6 @@
 
         document.getElementById('ciphermethod').addEventListener('change', function() {
             var keyInput = document.getElementById('key');
-            if (this.value == 'caesar') {
-                keyInput.placeholder = 'Enter a number';
-            } else {
-                keyInput.placeholder = 'Enter a key';
-            }
             var method = this.value;
             var tooltip = document.querySelector('.info-icon');
             switch (method) {
