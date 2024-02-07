@@ -1,6 +1,3 @@
-import enchant
-import re
-
 
 def encrypt(message, key, casesensitive=False):  # caesar cipher encrypt
     encrypted_message = ""

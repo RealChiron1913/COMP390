@@ -1,6 +1,7 @@
 
 
 def encrypt(message, key, casesensitive=False):
+    key = key_process(key)
     columns = len(key)
     rows = (len(message) + columns - 1) // columns
     padding = rows * columns - len(message)
@@ -17,6 +18,7 @@ def encrypt(message, key, casesensitive=False):
 
 
 def decrypt(encrypted_message, key):
+    key = key_process(key)
     columns = len(key)
     rows = len(encrypted_message) // columns
     matrix = [['' for _ in range(columns)] for _ in range(rows)]
@@ -33,16 +35,49 @@ def decrypt(encrypted_message, key):
 
     return decrypted_message
 
+def key_process(number_strings):
+    number_strings = ''.join([str(ord(char)) if char.isalpha() else char for char in number_strings])
+    number_strings = str(int(number_strings)*int(number_strings)*len(number_strings))
+    print(number_strings)
+    appeared = set()
+    unique = []
+    for number in number_strings:
+        if number not in appeared:
+            unique.append(number)
+            appeared.add(number)
+    number_strings = unique
+    numbers = [int(s) for s in number_strings]
+    sorted_numbers = sorted(numbers)
+    processed = []
+    for number in number_strings:
+        index = sorted_numbers.index(int(number))
+        processed.append(index)
+    print(processed)
+    # to int
+    processed = ''.join([str(i) for i in processed])
+    return processed
 
+def key_process(number_strings):
+    number_strings = ''.join([str(ord(char)) if char.isalpha() else char for char in number_strings])
+    number_strings = str(int(number_strings)*int(number_strings)*len(number_strings))
+    print(number_strings)
+    appeared = set()
+    unique = []
+    for number in number_strings:
+        if number not in appeared:
+            unique.append(number)
+            appeared.add(number)
+    number_strings = unique
+    numbers = [int(s) for s in number_strings]
+    sorted_numbers = sorted(numbers)
+    processed = []
+    for number in number_strings:
+        index = sorted_numbers.index(int(number))
+        processed.append(index)
+    print(processed)
+    # to int
+    processed = ''.join([str(i) for i in processed])
+    return processed
 
-
-
-# plaintext = gettext('hamlet.txt')
-# key = '9999456'
-# encrypted = encrypt(plaintext, key)
-# # print(encrypted)
-# decrypted = decrypt(encrypted, key)
-# # print(decrypted)
-# print(key)
 
 

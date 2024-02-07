@@ -149,8 +149,8 @@
                     	<label for="plaintext">Text (Plaintext)</label>
                     	<textarea id="plaintext" name="plaintext" rows="10"></textarea>
                         <div class="button-group">
-                            <button class = "button" type="button" onclick="event.preventDefault()">Upload</button>
-                            <button class = "button" type="button" onclick="event.preventDefault()">Save</button>
+                            <button id = "Plain-upload" class = "button" type="button" onclick="event.preventDefault()">Upload</button>
+                            <button id = "Plain-save" class = "button" type="button">Save</button>
                         </div>
                     </div>
                     <div class="control-area">
@@ -158,8 +158,8 @@
                             <label for="key">Key</label>
                             <input type="text" id="key" name="key" placeholder="Enter a key">
                         </div>
-                        <button class = "button-control" type="button" onclick="button_encrypt()">Encrypt</button>
-                        <button class = "button-control" type="button" onclick="event.preventDefault()">Decrypt</button>
+                        <button class = "button-control" type="button" id="Encrypt" onclick="button_click(this.id)">Encrypt</button>
+                        <button class = "button-control" type="button" id="Decrypt" onclick="button_click(this.id)">Decrypt</button>
                         <div class="processing">
                             <label for="processing">Processing</label>
                             <progress id="processing" value="0" max="100" class="processing-bar"></progress>
@@ -169,8 +169,8 @@
                         <label for="ciphertext">Text (Ciphertext)</label>
                         <textarea id="ciphertext" name="ciphertext" rows="10"></textarea>
                         <div class="button-group">
-                            <button class = "button" type="button" onclick="event.preventDefault()">Upload</button>
-                            <button class = "button" type="button" onclick="event.preventDefault()">Save</button>
+                            <button id = "Cipher-upload" class = "button" type="button" onclick="event.preventDefault()">Upload</button>
+                            <button id = "Cipher-save" class = "button" type="button">Save</button>
                         </div>
                     </div>
                 </div>
@@ -185,64 +185,99 @@
     </footer>
 
     <script>
-        document.querySelectorAll('.button, .button-control').forEach(button => {
-            button.style.cursor = 'pointer'; // Change cursor to pointer when hover over buttons
-            // Add click animation
-            button.onmousedown = () => button.style.transform = 'scale(0.95)';
-            button.onmouseup = () => button.style.transform = 'scale(1)';
-        });
+        // Event listeners for UI interactions
+        function initializeEventListeners() {
+            document.querySelectorAll('.button, .button-control').forEach(button => {
+                button.style.cursor = 'pointer';
+                button.onmousedown = () => button.style.transform = 'scale(0.95)';
+                button.onmouseup = () => button.style.transform = 'scale(1)';
+            });
 
-        document.getElementById('withoutkey').addEventListener('change', function() {
-            var keyInput = document.getElementById('key');
-            if (this.checked) {
-                keyInput.disabled = true;
-                keyInput.style.opacity = '0.5'; // Reduce opacity to indicate it's disabled
-                // Smooth transition for opacity
-                keyInput.style.transition = 'opacity 0.5s';
-            } else {
-                keyInput.disabled = false;
-                keyInput.style.opacity = '1'; // Full opacity when enabled
-            }
-        });
+            document.getElementById('withoutkey').addEventListener('change', toggleKeyInput);
+            document.getElementById('ciphermethod').addEventListener('change', updateTooltip);
+            document.getElementById('Plain-save').addEventListener('click', () => saveText('plaintext'));
+            document.getElementById('Cipher-save').addEventListener('click', () => saveText('ciphertext'));
+            document.getElementById('Plain-upload').addEventListener('click', () => uploadText('plaintext'));
+            document.getElementById('Cipher-upload').addEventListener('click', () => uploadText('ciphertext'));
+        }
 
-        document.getElementById('ciphermethod').addEventListener('change', function() {
+        // Toggle key input based on checkbox
+        function toggleKeyInput() {
             var keyInput = document.getElementById('key');
-            var method = this.value;
-            var tooltip = document.querySelector('.info-icon');
+            keyInput.disabled = this.checked;
+            keyInput.style.opacity = this.checked ? '0.5' : '1';
+            keyInput.style.transition = 'opacity 0.5s';
+        }
+
+        // Update tooltip for cipher method
+        function updateTooltip() {
+            var tooltip = getTooltipByMethod(this.value);
+            document.querySelector('.info-icon').setAttribute('data-tooltip', tooltip);
+        }
+
+        // Get tooltip text by cipher method
+        function getTooltipByMethod(method) {
             switch (method) {
-                case 'caesar':
-                    tooltip = 'Caesar: Shifts letters by a fixed number.';
-                    break;
-                case 'permutation':
-                    tooltip = 'Permutation: Rearranges letters according to a key.';
-                    break;
-                case 'substitution':
-                    tooltip = 'Substitution: Replaces letters according to a key.';
-                    break;
+                case 'caesar': return 'Caesar: Shifts letters by a fixed number.';
+                case 'permutation': return 'Permutation: Rearranges letters according to a key.';
+                case 'substitution': return 'Substitution: Replaces letters according to a key.';
+                default: return '';
             }
-            var infoicon = document.querySelector('.info-icon');
-            infoicon.setAttribute('data-tooltip', tooltip);
-        });
+        }
 
-        document.querySelectorAll('.info-icon').forEach(icon => {
-            icon.addEventListener('mouseenter', function() {
-                var tooltip = this.getAttribute('data-tooltip');
-                var tooltipDiv = document.createElement('div');
-                tooltipDiv.classList.add('tooltip');
-                this.appendChild(tooltipDiv);
-            });
+        // Save text from specified textarea
+        function saveText(areaId) {
+            var text = document.getElementById(areaId).value;
+            var filename = areaId + '.txt';
+            saveTextAsFile(text, filename);
+        }
 
-            icon.addEventListener('mouseleave', function() {
-                this.removeChild(this.querySelector('.tooltip'));
-            });
-        });
+        // Upload text to specified textarea
+        function uploadText(areaId) {
+            var inputElement = document.createElement('input');
+            inputElement.type = 'file';
+            inputElement.accept = '.txt';
+            inputElement.onchange = function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById(areaId).value = e.target.result;
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            inputElement.click();
+        }
 
-        function button_encrypt() {
+        // Utility function to save text as a file
+        function saveTextAsFile(text, filename) {
+            const blob = new Blob([text], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Encrypt button click event
+        function button_click(textContent) {
             var plaintext = document.getElementById('plaintext').value;
+            var ciphertext = document.getElementById('ciphertext').value;
             var key = document.getElementById('key').value;
             var language = document.getElementById('language').value;
             var ciphermethod = document.getElementById('ciphermethod').value;
             var casesensitive = document.getElementById('casesensitive').checked;
+            var withoutKey = document.getElementById('withoutkey').checked;
+            if (textContent == "Encrypt") {
+                encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey);
+            } else {
+                decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey);
+            }
+        }
+
+        function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey) {
             fetch('/encrypt', {
                 method: 'POST',
                 headers: {
@@ -259,12 +294,25 @@
             });
         }
 
+        function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey) {
+            fetch('/decrypt', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('plaintext').value = data.plaintext;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
 
-       
-        
-
-        
-
+        // Initialize event listeners on document load
+        document.addEventListener('DOMContentLoaded', initializeEventListeners);
 
     </script>
 </body>
