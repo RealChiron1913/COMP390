@@ -133,13 +133,17 @@
                 <div>
                     <label for="options">Options</label>
                     <div class="options">
-                        <div>
-                            <input class="checkbox" type="checkbox" id="withoutkey" name="withoutkey">
-                            <label for="withoutkey">Decryption without Key</label>
-                        </div>
                         <div>  <!-- Add case sensitive here -->
                             <input class="checkbox" type="checkbox" id="casesensitive" name="casesensitive">
                             <label for="casesensitive">Case Sensitive</label>
+                        </div>
+                        <div>
+                            <input class="checkbox" type="checkbox" id="keyprocess" name="keyprocess">
+                            <label for="keyprocess">Process the Key</label>
+                        </div>
+                        <div>
+                            <input class="checkbox" type="checkbox" id="withoutkey" name="withoutkey">
+                            <label for="withoutkey">Decryption without Key</label>
                         </div>
                     </div>
                 </div>
@@ -270,20 +274,21 @@
             var ciphermethod = document.getElementById('ciphermethod').value;
             var casesensitive = document.getElementById('casesensitive').checked;
             var withoutKey = document.getElementById('withoutkey').checked;
+            var keyprocess = document.getElementById('keyprocess').checked;
             if (textContent == "Encrypt") {
-                encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey);
+                encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess);
             } else {
-                decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey);
+                decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess);
             }
         }
 
-        function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey) {
+        function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
             fetch('/encrypt', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive}),
+                body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess}),
             })
             .then(response => response.json())
             .then(data => {
@@ -294,13 +299,13 @@
             });
         }
 
-        function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey) {
+        function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
             fetch('/decrypt', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod}),
+                body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess}),
             })
             .then(response => response.json())
             .then(data => {

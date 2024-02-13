@@ -8,7 +8,6 @@ def gettext(path="hamlet.txt"):  # get text from file
     return text
 
 
-
 def encrypt(text, method, key=0, casesensitive=True):  # encrypt text
     if method == 'caesar':
         return caesar.encrypt(text, int(key), casesensitive)
@@ -20,7 +19,31 @@ def decrypt(text, method, key=0):  # decrypt text
     if method == 'caesar':
         return caesar.decrypt(text, int(key))
     if method == 'permutation':
-        return permutation.decrypt(text, int(key))
+        return permutation.decrypt(text, key)
+
+
+def key_process(number_strings, keyprocess=False):
+    if not keyprocess:
+        number_strings = ''.join([str(int(char)-1) for char in number_strings])
+        return number_strings
+    number_strings = ''.join([str(ord(char)) if char.isalpha() else char for char in number_strings])
+    number_strings = str(int(number_strings)*int(number_strings)*len(number_strings))
+    appeared = set()
+    unique = []
+    for number in number_strings:
+        if number not in appeared:
+            unique.append(number)
+            appeared.add(number)
+    number_strings = unique
+    numbers = [int(s) for s in number_strings]
+    sorted_numbers = sorted(numbers)
+    processed = []
+    for number in number_strings:
+        index = sorted_numbers.index(int(number))
+        processed.append(index)
+    # to int
+    processed = ''.join([str(i) for i in processed])
+    return processed
 
 
 app = Flask(__name__)
@@ -36,10 +59,12 @@ def index():
 def encryptpage():
     data = request.json  # 获取JSON数据
     plaintext = data['plaintext']
-    key = data['key']
     method = data['ciphermethod']
     casesensitive = data['casesensitive']
+    keyprocess = data['keyprocess']
+    key = key_process(data['key'], keyprocess)
     ciphertext = encrypt(plaintext, method, key, casesensitive)
+    print(key)
     return jsonify(ciphertext=ciphertext)
 
 
@@ -47,8 +72,9 @@ def encryptpage():
 def decryptpage():
     data = request.json
     ciphertext = data['ciphertext']
-    key = data['key']
     method = data['ciphermethod']
+    keyprocess = data['keyprocess']
+    key = key_process(data['key'], keyprocess)
     plaintext = decrypt(ciphertext, method, key)
     return jsonify(plaintext=plaintext)
 
