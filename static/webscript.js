@@ -83,20 +83,21 @@ function button_click(textContent) {
     var ciphermethod = document.getElementById('ciphermethod').value;
     var casesensitive = document.getElementById('casesensitive').checked;
     var withoutKey = document.getElementById('withoutkey').checked;
+    var keyprocess = document.getElementById('keyprocess').checked;
     if (textContent == "Encrypt") {
-        encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey);
+        encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess);
     } else {
-        decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey);
+        decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess);
     }
 }
 
-function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey) {
+function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
     fetch('/encrypt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive}),
+        body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess}),
     })
     .then(response => response.json())
     .then(data => {
@@ -107,13 +108,13 @@ function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutK
     });
 }
 
-function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey) {
+function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
     fetch('/decrypt', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod}),
+        body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess}),
     })
     .then(response => response.json())
     .then(data => {
