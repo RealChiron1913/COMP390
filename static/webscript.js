@@ -4,7 +4,7 @@ function initializeEventListeners() {
         button.style.cursor = 'pointer';
         button.onmousedown = () => button.style.transform = 'scale(0.95)';
         button.onmouseup = () => button.style.transform = 'scale(1)';
-    });
+    }); 
 
     document.getElementById('withoutkey').addEventListener('change', toggleKeyInput);
     document.getElementById('ciphermethod').addEventListener('change', updateTooltip);
@@ -50,11 +50,11 @@ function uploadText(areaId) {
     var inputElement = document.createElement('input');
     inputElement.type = 'file';
     inputElement.accept = '.txt';
-    inputElement.onchange = function() {
+    inputElement.onchange = function () {
         const file = this.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 document.getElementById(areaId).value = e.target.result;
             };
             reader.readAsText(file);
@@ -65,7 +65,7 @@ function uploadText(areaId) {
 
 // Utility function to save text as a file
 function saveTextAsFile(text, filename) {
-    const blob = new Blob([text], {type: 'text/plain'});
+    const blob = new Blob([text], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -97,15 +97,15 @@ function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutK
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess}),
+        body: JSON.stringify({ plaintext: plaintext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess }),
     })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('ciphertext').value = data.ciphertext;
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ciphertext').value = data.ciphertext;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
 function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
@@ -114,15 +114,15 @@ function decrypt(ciphertext, key, ciphermethod, language, casesensitive, without
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess}),
+        body: JSON.stringify({ ciphertext: ciphertext, key: key, language: language, ciphermethod: ciphermethod, casesensitive: casesensitive, withoutKey: withoutKey, keyprocess: keyprocess }),
     })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('plaintext').value = data.plaintext;
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('plaintext').value = data.plaintext;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 }
 
 // Initialize event listeners on document load

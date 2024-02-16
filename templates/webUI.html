@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,25 +9,29 @@
     <style>
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
         }
+
         .grid input,
         .grid textarea,
         .grid progress {
-            margin-bottom: 1rem; 
+            margin-bottom: 1rem;
         }
+
         .button {
             gap: 1rem;
             padding: 5px 10px;
             border-radius: 4px;
             width: 100px;
         }
+
         .button-group {
             display: flex;
             gap: 10px;
             justify-content: space-between;
         }
+
         .button-control {
             padding: 5px 10px;
             border-radius: 4px;
@@ -34,41 +39,47 @@
             margin: auto;
             margin-bottom: 1rem;
         }
+
         .key-input {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-top: 2rem;
         }
+
         .processing {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
         }
+
         .selectbar {
             width: 15rem;
         }
+
         .checkbox {
             margin-top: 0.8rem;
         }
-        .options {
+
+        .option-area {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-            border: 1px solid rgb(55,73,86);
+            border: 1px solid rgb(55, 73, 86);
             border-radius: 8px;
             padding: 0.5rem;
             margin-bottom: 1rem;
         }
+
         .selectionbar {
             display: block;
         }
-        
+
         .info-icon {
             display: inline-block;
             margin-left: 1rem;
             margin-top: 0.5rem;
-            border: 2px solid rgb(55,73,86);
+            border: 2px solid rgb(55, 73, 86);
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -77,14 +88,14 @@
             cursor: help;
             text-emphasis: none;
         }
-        .methodbar{
+
+        .methodbar {
             display: flex;
             flex-direction: row;
         }
-
-        
     </style>
 </head>
+
 <body>
     <nav class="container-fluid">
         <ul>
@@ -99,12 +110,13 @@
 
     <main class="container">
         <div class="grid">
-            <section> 
+            <section>
                 <hgroup>
                     <h2>Encryption Tool</h2>
                     <h3>Secure your information</h3>
                 </hgroup>
-                <p>Select the type of encryption, enter your text, and choose if you want to use a key for encryption/decryption.</p>
+                <p>Select the type of encryption, enter your text, and choose if you want to use a key for
+                    encryption/decryption.</p>
                 <div class="selectbar">
                     <label for="language">Language</label>
                     <select id="language" name="language">
@@ -117,23 +129,23 @@
                     <label for="ciphermethod">Cipher Method</label>
                     <div class="methodbar">
                         <select id="ciphermethod" name="ciphermethod">
-                        <option value="caesar">Caesar's</option>
+                            <option value="caesar">Caesar's</option>
                             <option value="permutation">Permutation</option>
                             <option value="substitution">Substitution</option>
-                        <!-- Add more cripher method options here -->
-                        </select>                         
+                            <!-- Add more cripher method options here -->
+                        </select>
                         <div>
                             <span class="info-icon" data-tooltip="Caesar: Shifts letters by a fixed number.">?</span>
                         </div>
                     </div>
-                    
+
                 </div>
-                
-                
+
+
                 <div>
-                    <label for="options">Options</label>
-                    <div class="options">
-                        <div>  <!-- Add case sensitive here -->
+                    <label for="option-area">Options</label>
+                    <div class="option-area">
+                        <div> <!-- Add case sensitive here -->
                             <input class="checkbox" type="checkbox" id="casesensitive" name="casesensitive">
                             <label for="casesensitive">Case Sensitive</label>
                         </div>
@@ -147,14 +159,15 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="grid">
                     <div class="text-area">
-                    	<label for="plaintext">Text (Plaintext)</label>
-                    	<textarea id="plaintext" name="plaintext" rows="10"></textarea>
+                        <label for="plaintext">Text (Plaintext)</label>
+                        <textarea id="plaintext" name="plaintext" rows="10"></textarea>
                         <div class="button-group">
-                            <button id = "Plain-upload" class = "button" type="button" onclick="event.preventDefault()">Upload</button>
-                            <button id = "Plain-save" class = "button" type="button">Save</button>
+                            <button id="Plain-upload" class="button" type="button"
+                                onclick="event.preventDefault()">Upload</button>
+                            <button id="Plain-save" class="button" type="button">Save</button>
                         </div>
                     </div>
                     <div class="control-area">
@@ -162,8 +175,10 @@
                             <label for="key">Key</label>
                             <input type="text" id="key" name="key" placeholder="Enter a key">
                         </div>
-                        <button class = "button-control" type="button" id="Encrypt" onclick="button_click(this.id)">Encrypt</button>
-                        <button class = "button-control" type="button" id="Decrypt" onclick="button_click(this.id)">Decrypt</button>
+                        <button class="button-control" type="button" id="Encrypt"
+                            onclick="button_click(this.id)">Encrypt</button>
+                        <button class="button-control" type="button" id="Decrypt"
+                            onclick="button_click(this.id)">Decrypt</button>
                         <div class="processing">
                             <label for="processing">Processing</label>
                             <progress id="processing" value="0" max="100" class="processing-bar"></progress>
@@ -173,8 +188,9 @@
                         <label for="ciphertext">Text (Ciphertext)</label>
                         <textarea id="ciphertext" name="ciphertext" rows="10"></textarea>
                         <div class="button-group">
-                            <button id = "Cipher-upload" class = "button" type="button" onclick="event.preventDefault()">Upload</button>
-                            <button id = "Cipher-save" class = "button" type="button">Save</button>
+                            <button id="Cipher-upload" class="button" type="button"
+                                onclick="event.preventDefault()">Upload</button>
+                            <button id="Cipher-save" class="button" type="button">Save</button>
                         </div>
                     </div>
                 </div>
@@ -184,11 +200,12 @@
 
     <footer class="container">
         <small>
-            <a href="#">Privacy Policy</a> • <a href="#">Terms of Use</a>
+            <a href="static/privacy_policy.html">Privacy Policy</a> • <a href="#">Terms of Use</a>
         </small>
     </footer>
 
     <script src="static/webscript.js" type="text/javascript"></script>
-    
+
 </body>
+
 </html>
