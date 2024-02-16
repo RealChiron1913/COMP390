@@ -1,8 +1,7 @@
 import caesar_cipher as caesar
 import permutation_cipher as permutation
 from keyprocess import key_process
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
-
+from flask import Flask, render_template, request, jsonify
 
 
 def gettext(path="hamlet.txt"):  # get text from file
@@ -30,7 +29,19 @@ app = Flask(__name__, static_folder="static")
 def index():
     title = 'Home'
     name = 'Home'
-    return render_template('webUI.html', title=title, name=name)
+    return render_template('index.html', title=title, name=name)
+
+@app.route('/termsofuse')
+def termsofuse():
+    title = 'Terms of Use'
+    name = 'Terms of Use'
+    return render_template('terms_of_use.html', title=title, name=name)
+
+@app.route('/privacypolicy')
+def privacypolicy():
+    title = 'Privacy Policy'
+    name = 'Privacy Policy'
+    return render_template('privacy_policy.html', title=title, name=name)
 
 
 @app.route('/encrypt', methods=['GET','POST'])
@@ -58,8 +69,8 @@ def decryptpage():
 
 
 if __name__ == '__main__':
-
     app.run(host='127.0.0.1', port=8080, debug=True)
+    
 
 
     
