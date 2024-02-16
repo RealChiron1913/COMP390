@@ -1,0 +1,134 @@
+/* Container styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+/* Heading styles */
+h1 {
+    font-size: 36px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+/* Paragraph styles */
+p {
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+/* Footer styles */
+.rights-reserved {
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 8rem;
+}
+
+.home-footer {
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 5rem;
+}
+
+/* Form styles */
+.home-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0; /* 移除不必要的外边距 */
+    padding-bottom: 0; /* 移除不必要的内边距 */
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.grid input,
+.grid textarea,
+.grid progress {
+    margin-bottom: 1rem;
+}
+
+.button {
+    gap: 1rem;
+    padding: 5px 10px;
+    border-radius: 4px;
+    width: 100px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.button-control {
+    padding: 5px 10px;
+    border-radius: 4px;
+    width: 8rem;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
+.key-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.processing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.selectbar {
+    width: 15rem;
+}
+
+.checkbox {
+    margin-top: 0.8rem;
+}
+
+.option-area {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    border: 1px solid rgb(55, 73, 86);
+    border-radius: 8px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.selectionbar {
+    display: block;
+}
+
+.info-icon {
+    display: inline-block;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    border: 2px solid rgb(55, 73, 86);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    cursor: help;
+    text-emphasis: none;
+}
+
+.methodbar {
+    display: flex;
+    flex-direction: row;
+}

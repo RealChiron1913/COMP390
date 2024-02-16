@@ -24,7 +24,7 @@ def decrypt(text, method, key=0):  # decrypt text
         return permutation.decrypt(text, key)
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 
 @app.route('/')
 def index():
