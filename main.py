@@ -44,6 +44,13 @@ def privacypolicy():
     return render_template('privacy_policy.html', title=title, name=name)
 
 
+@app.route('/contact')
+def contact():
+    title = 'Contact'
+    name = 'Contact'
+    return render_template('contact.html', title=title, name=name)
+
+
 @app.route('/encrypt', methods=['GET','POST'])
 def encryptpage():
     data = request.json  # 获取JSON数据
