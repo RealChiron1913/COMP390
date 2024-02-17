@@ -119,9 +119,15 @@ footer {
     line-height: 30px;
     cursor: help;
     text-emphasis: none;
+    z-index: -1;
 }
 
 .methodbar {
     display: flex;
     flex-direction: row;
+}
+
+.container-fluid {
+    position: fixed;
+    background-color: rgb(17,25,31);
 }
