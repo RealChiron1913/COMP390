@@ -131,3 +131,7 @@ footer {
     position: fixed;
     background-color: rgb(17,25,31);
 }
+
+.first-element {
+    margin-top: 5rem;
+}
