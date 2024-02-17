@@ -51,6 +51,13 @@ def contact():
     return render_template('contact.html', title=title, name=name)
 
 
+@app.route('/features')
+def features():
+    title = 'Features'
+    name = 'Features'
+    return render_template('features.html', title=title, name=name)
+
+
 @app.route('/encrypt', methods=['GET','POST'])
 def encryptpage():
     data = request.json  # 获取JSON数据
