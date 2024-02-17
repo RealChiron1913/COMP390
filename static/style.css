@@ -25,23 +25,9 @@ p {
 }
 
 /* Footer styles */
-.pp-footer {
+footer {
     margin-left: 0;
     margin-right: auto;
-    margin-top: 8rem;
-}
-
-.tou-footer {
-    margin-left: 0;
-    margin-right: auto;
-    margin-top: 5rem;
-}
-
-
-.home-footer {
-    margin-left: 0;
-    margin-right: auto;
-    margin-top: 5rem;
 }
 
 /* Form styles */
