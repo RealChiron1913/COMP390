@@ -16,11 +16,18 @@ def encrypt(text, method, key=0, casesensitive=True):  # encrypt text
         return permutation.encrypt(text, key, casesensitive)
 
 
-def decrypt(text, method, key=0):  # decrypt text
+def decrypt(text, method, key, casesensitive):  # decrypt text
     if method == 'caesar':
-        return caesar.decrypt(text, key)
+        return caesar.decrypt(text, key, casesensitive)
     if method == 'permutation':
-        return permutation.decrypt(text, key)
+        return permutation.decrypt(text, key, casesensitive)
+    
+
+def decrypt_without_key(text, method, casesensitive):  # decrypt text without key
+    if method == 'caesar':
+        return caesar.decrypt_without_key(text, casesensitive)
+    if method == 'permutation':
+        return permutation.decrypt_without_key(text, casesensitive)
 
 
 app = Flask(__name__, static_folder="static")
@@ -64,10 +71,10 @@ def encryptpage():
     plaintext = data['plaintext']
     method = data['ciphermethod']
     casesensitive = data['casesensitive']
+
     keyprocess = data['keyprocess']
     key = key_process(data['key'], method, keyprocess)
     ciphertext = encrypt(plaintext, method, key, casesensitive)
-    print(key)
     return jsonify(ciphertext=ciphertext)
 
 
@@ -76,9 +83,15 @@ def decryptpage():
     data = request.json
     ciphertext = data['ciphertext']
     method = data['ciphermethod']
+    casesensitive = data['casesensitive']
+
+    if data['withoutKey']:
+        plaintext, key = decrypt_without_key(ciphertext, method, casesensitive)
+        return jsonify(plaintext=plaintext, key=key)
+    
     keyprocess = data['keyprocess']
     key = key_process(data['key'], method, keyprocess)
-    plaintext = decrypt(ciphertext, method, key)
+    plaintext = decrypt(ciphertext, method, key, casesensitive)
     return jsonify(plaintext=plaintext)
 
 

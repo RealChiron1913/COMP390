@@ -14,7 +14,7 @@ def encrypt(message, key, casesensitive=False):
     return encrypted_text
 
 
-def decrypt(encrypted_message, key):
+def decrypt(encrypted_message, key, casesensitive=False):
     columns = len(key)
     rows = len(encrypted_message) // columns
     matrix = [['' for _ in range(columns)] for _ in range(rows)]
@@ -28,7 +28,8 @@ def decrypt(encrypted_message, key):
     decrypted_message = ""
     for row in matrix:
         decrypted_message += "".join(row)
-
+    if casesensitive is False:
+        decrypted_message = decrypted_message.upper()
     return decrypted_message
 
 

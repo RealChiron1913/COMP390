@@ -5,7 +5,6 @@ function initializeEventListeners() {
         button.onmousedown = () => button.style.transform = 'scale(0.95)';
         button.onmouseup = () => button.style.transform = 'scale(1)';
     }); 
-
     document.getElementById('withoutkey').addEventListener('change', toggleKeyInput);
     document.getElementById('ciphermethod').addEventListener('change', updateTooltip);
     document.getElementById('Plain-save').addEventListener('click', () => saveText('plaintext'));
@@ -119,6 +118,8 @@ function decrypt(ciphertext, key, ciphermethod, language, casesensitive, without
         .then(response => response.json())
         .then(data => {
             document.getElementById('plaintext').value = data.plaintext;
+            if (withoutKey) 
+                document.getElementById('key').value = data.key;
         })
         .catch((error) => {
             console.error('Error:', error);
