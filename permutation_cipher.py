@@ -1,3 +1,7 @@
+from itertools import permutations
+import enchant
+
+
 def encrypt(message, key, casesensitive=False):
     columns = len(key)
     rows = (len(message) + columns - 1) // columns
@@ -33,6 +37,37 @@ def decrypt(encrypted_message, key, casesensitive=False):
     return decrypted_message
 
 
+def decrypt_without_key(encrypted_message, casesensitive):
+    for columns in range(1, 10):
+        if len(encrypted_message) % columns == 0:
+            for permutation in permutations(range(columns)):
+                key = "".join(str(i) for i in permutation)
+                print(key)
+                decrypted_message = decrypt(encrypted_message, key, casesensitive)
+                if check_english(decrypted_message):
+                    return decrypted_message, key
+    return "Could not decrypt", "Could not decrypt"     # if the key is not found
 
 
-
+def check_english(text):
+    # Initialize an English dictionary
+    d = enchant.Dict("en_US")
+    
+    # Convert text to lowercase and split into words
+    words = text.lower().split()
+    
+    # Determine the number of words to check (up to a threshold of 100)
+    threshold = min(100, len(words))
+    
+    # Use a set for efficient lookup and to remove duplicates within the threshold
+    unique_words = set(words[:threshold])
+    
+    # Count the number of words in the set that are recognized as English
+    count = sum(1 for word in unique_words if d.check(word))
+    
+    # Print the count and the threshold for debugging purposes
+    print(count, threshold)
+    
+    # Determine if at least 50% of the words checked are English
+    # If the total number of words is less than the threshold, all words are checked
+    return count / threshold >= 0.5

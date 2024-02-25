@@ -101,6 +101,8 @@ function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutK
         .then(response => response.json())
         .then(data => {
             document.getElementById('ciphertext').value = data.ciphertext;
+            if (withoutKey) 
+                document.getElementById('key').value = data.key;
         })
         .catch((error) => {
             console.error('Error:', error);

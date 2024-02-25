@@ -1,15 +1,25 @@
-import itertools
+import caesar_cipher as caesar
+import permutation_cipher as permutation
+from keyprocess import key_process
 
-# 生成1到10的数字列表
-num = 10
-for i in range(0, num):
-    numbers = list(range(0, i + 1))
 
-# 使用permutations函数生成所有排列组合
-    all_permutations = list(itertools.permutations(numbers))
-# 遍历并打印所有排列组合
-    for perm in all_permutations:
-        nums = []
-        for num in perm:
-            nums.append(num)
-        print(nums)
+
+
+if __name__ == '__main__':
+    key = "5643127"
+    key = key_process(key, 'permutation', False)
+    print(key)
+
+    with open('hamlet.txt', 'r') as file:
+        text = file.read()
+
+
+    # text = "HELLO WORLD"
+    # print(text)
+    encrypted_text = permutation.encrypt(text, key, True)
+    decrypted_text, key = permutation.decrypt_without_key(encrypted_text, True)
+
+    # for line in decrypted_text.split('\n'):
+    #     print(line)
+
+    print('Correct key:', key)
