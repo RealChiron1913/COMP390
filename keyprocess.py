@@ -30,14 +30,16 @@ def sort_and_index(number_strings):
 def key_process(number_strings, method, keyprocess=False):
     if method=='permutation' and not keyprocess:
         number_strings = process_permutation(number_strings)
+        return number_strings
     elif method=='caesar' and not keyprocess:
         return process_caesar(number_strings)
     else:
         number_strings = process_other(number_strings)
         if method=='caesar':
             return int(number_strings)
-
-    number_strings = remove_duplicates(number_strings)
-    processed = sort_and_index(number_strings)
-    processed = ''.join([str(i) for i in processed])
-    return processed
+        elif method=='permutation':
+            number_strings = remove_duplicates(number_strings)
+            processed = sort_and_index(number_strings)
+            processed = ''.join([str(i) for i in processed])
+            return processed
+   

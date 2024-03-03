@@ -25,7 +25,9 @@ function toggleKeyInput() {
 function updateTooltip() {
     var tooltip = getTooltipByMethod(this.value);
     document.querySelector('.info-icon').setAttribute('data-tooltip', tooltip);
+    
 }
+
 
 // Get tooltip text by cipher method
 function getTooltipByMethod(method) {
