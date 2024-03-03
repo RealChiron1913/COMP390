@@ -3,6 +3,7 @@ import enchant
 
 
 def encrypt(message, key, casesensitive=False):
+    print(key)
     columns = len(key)
     rows = (len(message) + columns - 1) // columns
     padding = rows * columns - len(message)

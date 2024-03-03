@@ -6,7 +6,7 @@ from keyprocess import key_process
 
 
 if __name__ == '__main__':
-    key = "4231"
+    key = "654321"
     key = key_process(key, 'permutation', False)
     print(key)
 
