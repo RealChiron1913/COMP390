@@ -1,5 +1,5 @@
 import random
-from keyprocess import key_process
+from keyprocess import process_permutation
 
 
 def caesar():
@@ -9,4 +9,4 @@ def permutation():
     n = random.randint(1, 9)
     numbers = list(range(1, n + 1))
     user_key = ''.join(map(str, random.sample(numbers, n)))
-    return key_process(user_key, 'permutation', False), user_key
+    return process_permutation(user_key), user_key

@@ -63,8 +63,8 @@ def encrypt_without_key(text, method, casesensitive):  # encrypt text without ke
         key = random_key.caesar()
         return caesar.encrypt(text, key, casesensitive), key
     if method == 'permutation':
-        key, user_key = random_key.permutation()
-        return permutation.encrypt(text, key, casesensitive), user_key
+        true_key, user_key = random_key.permutation()
+        return permutation.encrypt(text, true_key, casesensitive), user_key
     
     
 def decrypt_without_key(text, method, casesensitive):  # decrypt text without key
