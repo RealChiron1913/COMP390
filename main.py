@@ -1,5 +1,6 @@
 import caesar_cipher as caesar
 import permutation_cipher as permutation
+import substitution_cipher as substitution
 from keyprocess import key_process
 from flask import Flask, render_template, request, jsonify
 import random_key
@@ -49,6 +50,8 @@ def encrypt(text, method, key=0, casesensitive=True):  # encrypt text
         return caesar.encrypt(text, key, casesensitive)
     if method == 'permutation':
         return permutation.encrypt(text, key, casesensitive)
+    if method == 'substitution':
+        return substitution.encrypt(text, key, casesensitive)
 
 
 def decrypt(text, method, key, casesensitive):  # decrypt text
@@ -56,6 +59,8 @@ def decrypt(text, method, key, casesensitive):  # decrypt text
         return caesar.decrypt(text, key, casesensitive)
     if method == 'permutation':
         return permutation.decrypt(text, key, casesensitive)
+    if method == 'substitution':
+        return substitution.decrypt(text, key, casesensitive)
     
 
 def encrypt_without_key(text, method, casesensitive):  # encrypt text without key
@@ -65,6 +70,9 @@ def encrypt_without_key(text, method, casesensitive):  # encrypt text without ke
     if method == 'permutation':
         true_key, user_key = random_key.permutation()
         return permutation.encrypt(text, true_key, casesensitive), user_key
+    if method == 'substitution':
+        key = random_key.substitution()
+        return substitution.encrypt(text, key, casesensitive), key
     
     
 def decrypt_without_key(text, method, casesensitive):  # decrypt text without key
