@@ -1,28 +1,33 @@
 import caesar_cipher as caesar
 import permutation_cipher as permutation
+import substitution_cipher as substitution
 from keyprocess import key_process
 
 
 
 
 if __name__ == '__main__':
-    key = "654321"
-    key = key_process(key, 'permutation', False)
+    key = "EJOTYCHMRWFLNBXDPUVZGKQIAS"
+    # key = key_process(key, 'permutation', False)
     print(key)
 
-    with open('hamlet.txt', 'r') as file:
-        text = file.read()
+    # with open('hamlet.txt', 'r') as file:
+    #     text = file.read()
 
 
-    # text = "HELLO WORLD"
+    text = "HELLO WOrLD"
     # print(text)
-    encrypted_text = permutation.encrypt(text, key, True)
+    encrypted_text = substitution.encrypt(text, key, False)
 
-    # decrypted_text = permutation.decrypt(encrypted_text, key, True)
+    print(encrypted_text)
 
-    decrypted_text, key = permutation.decrypt_without_key(encrypted_text, True)
+    decrypted_text = substitution.decrypt(encrypted_text, key, True)
 
-    # for line in decrypted_text.split('\n'):
-    #     print(line)
+    print(decrypted_text)
 
-    print('Correct key:', key)
+    # decrypted_text, key = permutation.decrypt_without_key(encrypted_text, True)
+
+    # # for line in decrypted_text.split('\n'):
+    # #     print(line)
+
+    # print('Correct key:', key)
