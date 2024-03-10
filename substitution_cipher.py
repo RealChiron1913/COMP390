@@ -1,4 +1,5 @@
-
+import itertools
+from check_words import check_english
 
 def encrypt(message, key, casesensitive=False):  # substitution cipher encrypt
     # define the alphabets
@@ -44,3 +45,17 @@ def decrypt(encrypted_message, key, casesensitive=False):  # substitution cipher
             decrypted_message += char
 
     return decrypted_message
+
+
+def decrypt_without_key(encrypted_message, casesensitive):  # substitution cipher decrypt without key
+    common_letters = 'etaoinshrdlcumwfgypbvkjxqz'  # Ordered by frequency in English
+
+    for perm in itertools.permutations(common_letters):
+        key = ''.join(perm)
+        possible_decrypted_message = decrypt(encrypted_message, key, casesensitive)
+        
+        # Check for common English words or patterns in the decrypted message
+        if check_english(possible_decrypted_message):
+            return possible_decrypted_message, key
+        
+    return "Could not decrypt", "Could not decrypt"

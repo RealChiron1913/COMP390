@@ -84,7 +84,7 @@ def decrypt_without_key(text, method, casesensitive):  # decrypt text without ke
 
 @app.route('/encrypt', methods=['GET','POST'])
 def encryptpage():
-    data = request.json  # 获取JSON数据
+    data = request.json # get data from request
     plaintext = data['plaintext']
     method = data['ciphermethod']
     casesensitive = data['casesensitive']
