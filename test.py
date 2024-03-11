@@ -12,24 +12,10 @@ if __name__ == '__main__':
     # key = key_process(key, 'permutation', False)
     print(key)
 
-    # with open('hamlet.txt', 'r') as file:
-    #     text = file.read()
+    with open('hamlet.txt', 'r') as file:
+        text = file.read().lower()
 
-    print(random_key.substitution())
+    substitution.frequency_analysis(text)
 
-    text = "HELLO WOrLD"
-    # print(text)
-    encrypted_text = substitution.encrypt(text, key, False)
-
-    # print(encrypted_text)
-
-    decrypted_text = substitution.decrypt(encrypted_text, key, True)
-
-    # print(decrypted_text)
-
-    # decrypted_text, key = permutation.decrypt_without_key(encrypted_text, True)
-
-    # # for line in decrypted_text.split('\n'):
-    # #     print(line)
-
-    # print('Correct key:', key)
+    encrypted = substitution.encrypt(text, key, True)
+    substitution.frequency_analysis(encrypted)

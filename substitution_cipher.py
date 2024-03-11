@@ -59,3 +59,21 @@ def decrypt_without_key(encrypted_message, casesensitive):  # substitution ciphe
             return possible_decrypted_message, key
         
     return "Could not decrypt", "Could not decrypt"
+
+
+def frequency_analysis(encrypted_message):
+    # 统计密文中每个单词的出现频率
+    encrypted_message = ''.join([char for char in encrypted_message if char.isalpha() or char.isspace()])
+    frequency = {}
+    for word in encrypted_message.split():
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
+    
+    # 输出频率最高的前10个单词
+            
+    print("Frequency Analysis:")
+    print("Word\t\tFrequency")
+    for word in sorted(frequency, key=frequency.get, reverse=True)[:10]:
+        print(word, "\t\t", frequency[word])
