@@ -1,8 +1,13 @@
 import enchant
+import re
+
 
 def check_english(text):
     # Initialize an English dictionary
     d = enchant.Dict("en_US")
+
+    # Remove non-alphabetic characters from the text
+    text = re.sub('[^A-Za-z]+', '', text)
     
     # Convert text to lowercase and split into words
     words = text.lower().split()
