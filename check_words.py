@@ -12,11 +12,11 @@ def check_english(text):
     # Convert text to lowercase and split into words
     words = text.lower().split()
     
-    # Determine the number of words to check (up to a threshold of 100)
+    # Determine the number of words to check (up to a threshold of last 100 words)
     threshold = min(100, len(words))
     
     # Use a set for efficient lookup and to remove duplicates within the threshold
-    unique_words = set(words[:threshold])
+    unique_words = set(words[-threshold:])
     
     # Count the number of words in the set that are recognized as English
     count = sum(1 for word in unique_words if d.check(word))

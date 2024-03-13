@@ -58,7 +58,7 @@ def decrypt_without_key(encrypted_message, casesensitive):  # substitution ciphe
 
 
 
-def find_key(encrypted_message, maxlen=3000):
+def find_key(encrypted_message, maxlen=1000):
     length = min(maxlen, len(encrypted_message))
     encrypted_message = encrypted_message[:length]
     maxkey = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
