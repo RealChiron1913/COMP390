@@ -2,7 +2,8 @@ from itertools import permutations
 from modules.check_words import check_english
 
 def encrypt(message, key, casesensitive=False):
-    print(key)
+
+    key = ''.join([str(int(char)-1) for char in key])
     columns = len(key)
     rows = (len(message) + columns - 1) // columns
     padding = rows * columns - len(message)
@@ -28,6 +29,8 @@ def encrypt(message, key, casesensitive=False):
 
 
 def decrypt(encrypted_message, key, casesensitive=False):
+    key = ''.join([str(int(char)-1) for char in key])
+
     columns = len(key)
     rows = len(encrypted_message) // columns
     
@@ -59,6 +62,6 @@ def decrypt_without_key(encrypted_message, casesensitive):
                 decrypted_message = decrypt(encrypted_message, ''.join(map(str, permutation)), casesensitive)
                 if check_english(decrypted_message):
                     # if the decrypted message is in English, return the message and the key
-                    key = ''.join([str(p + 1) for p in permutation])
+                    key = ''.join([str(p) for p in permutation])
                     return decrypted_message, key
     return "Could not decrypt", "Could not decrypt"

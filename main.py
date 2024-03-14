@@ -1,9 +1,8 @@
 import cipher.caesar_cipher as caesar
 import cipher.permutation_cipher as permutation
 import cipher.substitution_cipher as substitution
-from modules.keyprocess import key_process
 from flask import Flask, render_template, request, jsonify
-import modules.random_key as random_key
+import modules.cipher_key as cipher_key
 
 
 app = Flask(__name__, static_folder="static")
@@ -64,14 +63,12 @@ def decrypt(text, method, key, casesensitive):  # decrypt text
     
 
 def encrypt_without_key(text, method, casesensitive):  # encrypt text without key
+    key = cipher_key.key(method=method).randomkey()
     if method == 'caesar':
-        key = random_key.caesar()
         return caesar.encrypt(text, key, casesensitive), key
     if method == 'permutation':
-        true_key, user_key = random_key.permutation()
-        return permutation.encrypt(text, true_key, casesensitive), user_key
+        return permutation.encrypt(text, key, casesensitive), key
     if method == 'substitution':
-        key = random_key.substitution()
         return substitution.encrypt(text, key, casesensitive), key
     
     
@@ -90,15 +87,22 @@ def encryptpage():
     plaintext = data['plaintext']
     method = data['ciphermethod']
     casesensitive = data['casesensitive']
+    keyprocess = data['keyprocess']
 
+    cipherkey = cipher_key.key(data['key'], method)
+
+    if not keyprocess:
+        if not cipherkey.check(method):
+            return jsonify(status=False, message='Invalid key')
+        
     if data['withoutKey']:
         ciphertext, key = encrypt_without_key(plaintext, method, casesensitive)
-        return jsonify(ciphertext=ciphertext, key=key)
+        
+    key = cipherkey.process(keyprocess)
+    print(key)
 
-    keyprocess = data['keyprocess']
-    key = key_process(data['key'], method, keyprocess)
     ciphertext = encrypt(plaintext, method, key, casesensitive)
-    return jsonify(ciphertext=ciphertext)
+    return jsonify(ciphertext=ciphertext, key=key)
 
 
 @app.route('/decrypt', methods=['GET','POST'])
@@ -107,15 +111,26 @@ def decryptpage():
     ciphertext = data['ciphertext']
     method = data['ciphermethod']
     casesensitive = data['casesensitive']
+    keyprocess = data['keyprocess']
+
+    cipherkey = cipher_key.key(data['key'], method)
 
     if data['withoutKey']:
         plaintext, key = decrypt_without_key(ciphertext, method, casesensitive)
         return jsonify(plaintext=plaintext, key=key)
     
-    keyprocess = data['keyprocess']
-    key = key_process(data['key'], method, keyprocess)
+
+    if not keyprocess:
+        if not cipherkey.check(method):
+            return jsonify(status=False, message='Invalid key')
+        
+
+    key = cipherkey.process(keyprocess)
+    print(key)
+
     plaintext = decrypt(ciphertext, method, key, casesensitive)
-    return jsonify(plaintext=plaintext)
+    return jsonify(plaintext=plaintext, key=key)
+
 
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ function initializeEventListeners() {
         button.style.cursor = 'pointer';
         button.onmousedown = () => button.style.transform = 'scale(0.95)';
         button.onmouseup = () => button.style.transform = 'scale(1)';
-    }); 
+    });
     document.getElementById('withoutkey').addEventListener('change', toggleKeyInput);
     document.getElementById('ciphermethod').addEventListener('change', updateTooltip);
     document.getElementById('Plain-save').addEventListener('click', () => saveText('plaintext'));
@@ -25,7 +25,7 @@ function toggleKeyInput() {
 function updateTooltip() {
     var tooltip = getTooltipByMethod(this.value);
     document.querySelector('.info-icon').setAttribute('data-tooltip', tooltip);
-    
+
 }
 
 
@@ -85,6 +85,7 @@ function button_click(textContent) {
     var casesensitive = document.getElementById('casesensitive').checked;
     var withoutKey = document.getElementById('withoutkey').checked;
     var keyprocess = document.getElementById('keyprocess').checked;
+
     if (textContent == "Encrypt") {
         encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess);
     } else {
@@ -93,6 +94,9 @@ function button_click(textContent) {
 }
 
 function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
+    var statusElement = document.getElementById("status-text");
+
+    statusElement.textContent = "Status: Processing...";
     fetch('/encrypt', {
         method: 'POST',
         headers: {
@@ -102,9 +106,12 @@ function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutK
     })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             document.getElementById('ciphertext').value = data.ciphertext;
-            if (withoutKey) 
+            if (withoutKey)
                 document.getElementById('key').value = data.key;
+            
+            statusElement.textContent = "Status: Ready";
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -112,6 +119,8 @@ function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutK
 }
 
 function decrypt(ciphertext, key, ciphermethod, language, casesensitive, withoutKey, keyprocess) {
+    var statusElement = document.getElementById("status-text");
+    statusElement.textContent = "Status: Processing...";
     fetch('/decrypt', {
         method: 'POST',
         headers: {
@@ -122,8 +131,10 @@ function decrypt(ciphertext, key, ciphermethod, language, casesensitive, without
         .then(response => response.json())
         .then(data => {
             document.getElementById('plaintext').value = data.plaintext;
-            if (withoutKey) 
+            if (withoutKey)
                 document.getElementById('key').value = data.key;
+            statusElement.textContent = "Status: Ready";
+
         })
         .catch((error) => {
             console.error('Error:', error);

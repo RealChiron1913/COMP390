@@ -24,6 +24,14 @@ p {
     line-height: 1.6;
 }
 
+
+m{
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+
 /* Footer styles */
 footer {
     margin-left: 0;
@@ -79,12 +87,13 @@ footer {
     margin-top: 2rem;
 }
 
-.processing {
+.status {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
+
 
 .selectbar {
     width: 15rem;

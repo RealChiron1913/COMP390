@@ -1,5 +1,6 @@
 
 def encrypt(message, key, casesensitive=False):  # caesar cipher encrypt
+    key = int(key)
     encrypted_message = ""
     for char in message:
         if char.isalpha():
@@ -15,7 +16,8 @@ def encrypt(message, key, casesensitive=False):  # caesar cipher encrypt
     return encrypted_message
 
 
-def decrypt(encrypted_message, key, casesensitive=False):  # caesar cipher decrypt with key
+def decrypt(encrypted_message, key, casesensitive=False):# caesar cipher decrypt with key
+    key = int(key)
     decrypted_message = ""
     for char in encrypted_message:
         if char.isalpha():

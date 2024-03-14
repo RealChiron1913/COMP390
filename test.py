@@ -1,8 +1,6 @@
 import cipher.caesar_cipher as caesar
 import cipher.permutation_cipher as permutation
 import cipher.substitution_cipher as substitution
-from modules.keyprocess import key_process
-import modules.random_key
 import modules.ngram_score as ns
 
 
