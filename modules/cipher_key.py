@@ -39,7 +39,7 @@ class key():
     def randomkey(self):
         method = self.method
         if method == 'caesar':
-            self.key = random.randint(1, 25)
+            self.key = str(random.randint(1, 25))
             return self.key
         if method == 'permutation':
             n = random.randint(1, 9)
@@ -78,6 +78,7 @@ def sort_and_index(number_strings):
     return processed
 
 def key_process(number_strings, method):
+    
     if method=='substitution':
         number_strings = remove_duplicates(number_strings.upper())
         number_strings = [char for char in number_strings if char.isalpha()]
@@ -89,13 +90,18 @@ def key_process(number_strings, method):
         number_strings = ''.join(number_strings)
         return number_strings
 
+    if number_strings == '':
+        return ''
+    
     number_strings = ''.join([str(ord(char)) if char.isalpha() else char for char in number_strings])
     number_strings = str(int(number_strings)*int(number_strings)*len(number_strings))
+
     if method=='caesar':
-        return int(number_strings) % 26
+        return number_strings
+    
     elif method=='permutation':
         number_strings = remove_duplicates(number_strings)
         processed = sort_and_index(number_strings)
-        processed = ''.join([str(i) for i in processed])
+        processed = ''.join([str(int(i)+1) for i in processed])
         return processed
     

@@ -60,25 +60,15 @@ def decrypt(text, method, key, casesensitive):  # decrypt text
         return permutation.decrypt(text, key, casesensitive)
     if method == 'substitution':
         return substitution.decrypt(text, key, casesensitive)
-    
 
-def encrypt_without_key(text, method, casesensitive):  # encrypt text without key
-    key = cipher_key.key(method=method).randomkey()
-    if method == 'caesar':
-        return caesar.encrypt(text, key, casesensitive), key
-    if method == 'permutation':
-        return permutation.encrypt(text, key, casesensitive), key
-    if method == 'substitution':
-        return substitution.encrypt(text, key, casesensitive), key
     
-    
-def decrypt_without_key(text, method, casesensitive):  # decrypt text without key
+def decrypt_without_key(text, method):  # decrypt text without key
     if method == 'caesar':
-        return caesar.decrypt_without_key(text, casesensitive)
+        return caesar.decrypt_without_key(text)
     if method == 'permutation':
-        return permutation.decrypt_without_key(text, casesensitive)
+        return permutation.decrypt_without_key(text)
     if method == 'substitution':
-        return substitution.decrypt_without_key(text, casesensitive)
+        return substitution.decrypt_without_key(text)
 
 
 @app.route('/encrypt', methods=['GET','POST'])
@@ -90,19 +80,21 @@ def encryptpage():
     keyprocess = data['keyprocess']
 
     cipherkey = cipher_key.key(data['key'], method)
-
-    if not keyprocess:
-        if not cipherkey.check(method):
-            return jsonify(status=False, message='Invalid key')
         
     if data['withoutKey']:
-        ciphertext, key = encrypt_without_key(plaintext, method, casesensitive)
+        key = cipherkey.randomkey()
+    else:
+        key = data['key']
         
-    key = cipherkey.process(keyprocess)
-    print(key)
+    processedkey = cipherkey.process(keyprocess)
 
-    ciphertext = encrypt(plaintext, method, key, casesensitive)
-    return jsonify(ciphertext=ciphertext, key=key)
+    if not cipherkey.check(method):
+        return jsonify(status=False)
+    
+
+    ciphertext = encrypt(plaintext, method, processedkey, casesensitive)
+
+    return jsonify(ciphertext=ciphertext, key=key, status=True)
 
 
 @app.route('/decrypt', methods=['GET','POST'])
@@ -116,20 +108,20 @@ def decryptpage():
     cipherkey = cipher_key.key(data['key'], method)
 
     if data['withoutKey']:
-        plaintext, key = decrypt_without_key(ciphertext, method, casesensitive)
-        return jsonify(plaintext=plaintext, key=key)
+        key = decrypt_without_key(ciphertext, method)
+        cipherkey.key = key
+    else:
+        key = data['key']
+
+    processedkey = cipherkey.process(keyprocess)
+
+    if not cipherkey.check(method):
+        return jsonify(status=False)
     
-
-    if not keyprocess:
-        if not cipherkey.check(method):
-            return jsonify(status=False, message='Invalid key')
-        
-
-    key = cipherkey.process(keyprocess)
     print(key)
 
-    plaintext = decrypt(ciphertext, method, key, casesensitive)
-    return jsonify(plaintext=plaintext, key=key)
+    plaintext = decrypt(ciphertext, method, processedkey, casesensitive)
+    return jsonify(plaintext=plaintext, key=key, status=True)
 
 
 

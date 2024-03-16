@@ -51,10 +51,9 @@ def decrypt(encrypted_message, key, casesensitive=False):  # substitution cipher
     return decrypted_message
 
 
-def decrypt_without_key(encrypted_message, casesensitive):  # substitution cipher decrypt without key
-    key = find_key(encrypted_message)
+def decrypt_without_key(encrypted_message):  # substitution cipher decrypt without key
 
-    return decrypt(encrypted_message, key, casesensitive), key
+    return find_key(encrypted_message)
 
 
 

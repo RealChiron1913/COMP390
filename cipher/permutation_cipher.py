@@ -53,15 +53,14 @@ def decrypt(encrypted_message, key, casesensitive=False):
     return decrypted_message
 
 
-
-def decrypt_without_key(encrypted_message, casesensitive):
-    for columns in range(1, 10):  # assume the key has at most 10 columns
+def decrypt_without_key(encrypted_message):
+    for columns in range(1, 9):  # assume the key has at most 9 columns
         if len(encrypted_message) % columns == 0:
             for permutation in permutations(range(columns)):
                 # decrypt the message using the permutation as the key
-                decrypted_message = decrypt(encrypted_message, ''.join(map(str, permutation)), casesensitive)
+                key = ''.join([str(int(p)+1) for p in permutation])
+                decrypted_message = decrypt(encrypted_message, key)
                 if check_english(decrypted_message):
                     # if the decrypted message is in English, return the message and the key
-                    key = ''.join([str(p) for p in permutation])
-                    return decrypted_message, key
-    return "Could not decrypt", "Could not decrypt"
+                    return key
+    return "Could not decrypt"

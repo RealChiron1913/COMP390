@@ -33,7 +33,7 @@ def decrypt(encrypted_message, key, casesensitive=False):# caesar cipher decrypt
     return decrypted_message
 
 
-def decrypt_without_key(encrypted_message, casesensitive):  # caesar cipher decrypt without key
+def decrypt_without_key(encrypted_message):  # caesar cipher decrypt without key
     dict = {}
     for i in encrypted_message:
         if i.isalpha():
@@ -50,5 +50,5 @@ def decrypt_without_key(encrypted_message, casesensitive):  # caesar cipher decr
             break
 
     key = ord(most_common_letter) - ord('E')
-    return decrypt(encrypted_message, key, casesensitive), key
+    return str(key)
 

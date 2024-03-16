@@ -107,7 +107,10 @@ function encrypt(plaintext, key, ciphermethod, language, casesensitive, withoutK
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            document.getElementById('ciphertext').value = data.ciphertext;
+            if (data.status)
+                document.getElementById('ciphertext').value = data.ciphertext;
+            else
+                alert("Invalid Key for the selected cipher method. Please try again.")
             if (withoutKey)
                 document.getElementById('key').value = data.key;
             
@@ -130,7 +133,12 @@ function decrypt(ciphertext, key, ciphermethod, language, casesensitive, without
     })
         .then(response => response.json())
         .then(data => {
-            document.getElementById('plaintext').value = data.plaintext;
+            console.log(data);
+            if (data.status)
+                document.getElementById('plaintext').value = data.plaintext;
+            else
+                alert("Invalid Key for the selected cipher method. Please try again.")
+
             if (withoutKey)
                 document.getElementById('key').value = data.key;
             statusElement.textContent = "Status: Ready";
