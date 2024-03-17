@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="static/style.css">
 
     <!-- Title of the webpage -->
-    <title>Features</title>
+    <title>Features - Encryption Tool</title>
 </head>
 
 <body>
@@ -35,35 +35,43 @@
 
     <!-- Main content of the webpage -->
     <main class="container">
-        <p>Our Encryption Tool offers the following features:</p>
-
         <section>
-            <h2>Encryption and Decryption</h2>
-            <p>Our tool allows you to encrypt and decrypt your text using various cipher methods. You can choose to use
-                a
-                key for encryption and decryption.</p>
-
-            <h2>Multiple Cipher Methods</h2>
-            <p>We offer a variety of cipher methods, including the Caesar cipher, the Vigenère cipher, and the Playfair
-                cipher. You can select the method that best suits your needs.</p>
+            <h2>Flexible Encryption Methods</h2>
+            <p>Our tool offers a range of encryption methods, tailored for different security needs and preferences. Here's how to use them:</p>
+            
+            <ul>
+                <li>
+                    <strong>Caesar Cipher</strong> - Shifts letters by a fixed number across the alphabet. Suitable for basic encryption needs. <em>To use, select "Caesar's" from the Cipher Method dropdown and enter a shift number as the key. E.g., a shift of 3 will replace A with D, B with E, and so on.</em>
+                </li>
+                <li>
+                    <strong>Permutation Cipher</strong> - Rearranges the letters of the plaintext according to a specific system. Good for more complex encryption requirements. <em>To use, choose "Permutation" and enter a permutation pattern as the key. E.g., a key of 2314 will rearrange the plaintext to the order of the numbers.</em>
+                </li>
+                <li>
+                    <strong>Substitution Cipher</strong> - Each letter in the plaintext is replaced by a letter with some fixed relationship to it. Offers a balance between simplicity and security. <em>Select "Substitution" and provide a substitution key. E.g. a key of "abcde...xyz" will replace A with the first letter, B with the second, and so on.</em>
+                </li>
+            </ul>
 
             <h2>Language Support</h2>
-            <p>Our tool supports multiple languages, including English and Chinese. You can select the language of your
-                choice for encryption and decryption.</p>
+            <p>Our tool supports multiple languages, making it versatile for global use. Simply select your desired language from the Language dropdown menu.</p>
 
-            <h2>Key Generation</h2>
-            <p>If you choose to use a key for encryption and decryption, our tool can generate a random key for you.
-                This
-                ensures that your text is secure and protected.</p>
+            <h2>Customizable Options</h2>
+            <p>Customize your encryption experience with various options such as case sensitivity and key processing. These options can be found under the Options section and adjusted according to your encryption or decryption needs. User can also choose 'Without key' for encryption/decryption by generating a key or analising the text to find the key.</p>
+
+            <h2>User-Friendly Interface</h2>
+            <p>Designed for ease of use, our interface guides you through each step of the encryption or decryption process, making it accessible for users of all skill levels.</p>
+
+            <h2>Real-Time Encryption and Decryption</h2>
+            <p>Enjoy instant encryption and decryption with our tool. Enter your text, select your settings, and our tool processes it in real-time, providing immediate results.</p>
         </section>
 
-        <footer style="margin-top: 8rem">
+        <!-- Footer -->
+        <footer style="margin-top: 5rem">
             <p>&copy; 2024 Gubin Zhao. All rights reserved.</p>
         </footer>
     </main>
 
+    <!-- External JavaScript file -->
     <script src="static/webscript.js" type="text/javascript"></script>
 </body>
-
 
 </html>

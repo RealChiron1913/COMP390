@@ -5,6 +5,7 @@ from modules.ngram_score import ngram_score
 from modules.check_words import check_english
 fitness = ngram_score('data/quadgrams.txt') # load our quadgram statistics
 
+
 def encrypt(message, key, casesensitive=False):  # substitution cipher encrypt
     # define the alphabets
     alphabet_lower = 'abcdefghijklmnopqrstuvwxyz'
@@ -51,13 +52,7 @@ def decrypt(encrypted_message, key, casesensitive=False):  # substitution cipher
     return decrypted_message
 
 
-def decrypt_without_key(encrypted_message):  # substitution cipher decrypt without key
-
-    return find_key(encrypted_message)
-
-
-
-def find_key(encrypted_message, maxlen=3000):
+def decrypt_without_key(encrypted_message, maxlen=3000):
     length = min(maxlen, len(encrypted_message))
     encrypted_message = encrypted_message[:length]
     maxkey = list('ABCDEFGHIJKLMNOPQRSTUVWXYZ')

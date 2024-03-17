@@ -118,7 +118,6 @@ def decryptpage():
     if not cipherkey.check(method):
         return jsonify(status=False)
     
-    print(key)
 
     plaintext = decrypt(ciphertext, method, processedkey, casesensitive)
     return jsonify(plaintext=plaintext, key=key, status=True)
