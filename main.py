@@ -88,6 +88,8 @@ def encryptpage():
         
     processedkey = cipherkey.process(keyprocess)
 
+    print(processedkey)
+
     if not cipherkey.check(method):
         return jsonify(status=False)
     

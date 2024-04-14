@@ -1,3 +1,4 @@
+import time
 import cipher.caesar_cipher as caesar
 import cipher.permutation_cipher as permutation
 import cipher.substitution_cipher as substitution
@@ -55,10 +56,16 @@ def test_no_key():
     return True
 
 if __name__ == '__main__':
-    print(test_caesar())
-    print(test_permutation())
-    print(test_substitution())
-    print(test_no_key())
+    # print(test_caesar())
+    # print(test_permutation())
+    # print(test_substitution())
+    # starttime = time.time()
+    # print(test_no_key())
+    # endtime = time.time()
+    # print(endtime - starttime)
+
+    text = "Looking at the sun without protective equipment such as solar eclipse glasses can harm vision and can lead to serious and permanent damage. Nesheiwat says the sun’s rays can burn the retina and damage the macula, the part of the retina at the back of the eye that is responsible for central vision."
+    print(substitution.encrypt(text, "QWERTYUIOPASDFGHJKLZXCVBNM", True))
     
 
 

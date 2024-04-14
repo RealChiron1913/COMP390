@@ -93,8 +93,8 @@ def key_process(number_strings, method):
     if number_strings == '':
         return ''
     
-    number_strings = ''.join([str(ord(char)) if char.isalpha() else char for char in number_strings])
-    number_strings = str(int(number_strings)*int(number_strings)*len(number_strings))
+    number_strings = ''.join([str(ord(char)) if not char.isdigit() else char for char in number_strings])
+    number_strings = str(round(float(number_strings))*round(float(number_strings))*len(number_strings))
 
     if method=='caesar':
         return number_strings
