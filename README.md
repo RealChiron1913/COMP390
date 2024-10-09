@@ -7,3 +7,7 @@
 - Install the required packages
 - Run the `main.py` file
 - Open the browser and go to the link `127.0.0.1:8080`
+
+如果你觉得这个项目对你有帮助，请为它点亮一颗⭐️！你的支持是我们前进的动力。
+
+If you find this project helpful, please give it a ⭐️! Your support motivates us to keep improving.
